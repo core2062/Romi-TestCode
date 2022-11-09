@@ -10,16 +10,16 @@
 
 #include "subsystems/Drivetrain.h"
 
-class DriveDistance
-    : public frc2::CommandHelper<frc2::CommandBase, DriveDistance> {
+class DriveDistance : public frc2::CommandHelper<frc2::CommandBase, DriveDistance> {
  public:
-  DriveDistance(double speed, units::meter_t distance, Drivetrain* drive);
-  //     : m_speed(speed), m_distance(distance), m_drive(drive) {
-  //   AddRequirements({m_drive});
-  // }
+ 
+  DriveDistance(double speed, units::meter_t distance, Drivetrain* drive)
+      : m_speed(speed), m_distance(distance), m_drive(drive) {
+    AddRequirements({m_drive});
+  }
 
   void Initialize() override;   
-  void Execute(double m_speed, double rot);
+  void Execute() override;
   void End(bool interrupted) override;
   bool IsFinished() override;
 

@@ -12,10 +12,9 @@
 #include "commands/TeleopArcadeDrive.h"
 #include "subsystems/Drivetrain.h"
 
-RobotContainer::RobotContainer() {
+RobotContainer::RobotContainer() : m_driveForward(2,1_m,&m_drive), m_driveStop(2,1_m,&m_drive) {
   // Configure the button bindings
   ConfigureButtonBindings();
-  DriveDistance* driveDistance = new DriveDistance(0.0,(units::length::meter_t)0,&m_drive);
   
 }
 
@@ -27,13 +26,13 @@ void RobotContainer::ConfigureButtonBindings() {
 
   // Example of how to use the onboard IO
   m_onboardButtonA.WhenPressed(frc2::PrintCommand("Button A Pressed"))
-      .WhenReleased(frc2::PrintCommand("Button A Released"));
+                  .WhenReleased(frc2::PrintCommand("Button A Released"));
 
-  frc2::JoystickButton(&m_controller, 1).WhenPressed(frc2::PrintCommand("Button Pressed"))
-      .WhenReleased(frc2::PrintCommand("Button Released"));
+  m_button1.WhenPressed(frc2::PrintCommand("Button Pressed"))
+                                        .WhenReleased(frc2::PrintCommand("Button Released"));
   
-frc2::JoystickButton(&m_controller, 1).WhenPressed(driveDistance.Execute(0.2, 0.0))
-                                      .WhenReleased(driveDistance.Execute(0.0, 0.0));
+  m_button1.WhenPressed(GetDriveDistance(true))
+                                        .WhenReleased(GetDriveDistance(false));
 
 
   // Setup SmartDashboard options.
@@ -44,4 +43,13 @@ frc2::JoystickButton(&m_controller, 1).WhenPressed(driveDistance.Execute(0.2, 0.
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   return m_chooser.GetSelected();
+}
+frc2::Command* RobotContainer::GetDriveDistance(bool moving){
+  if (moving)
+  {
+    return &m_driveForward;
+  } else {
+    return &m_driveStop;
+  }
+  
 }

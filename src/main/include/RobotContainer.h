@@ -8,13 +8,16 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc2/command/Command.h>
+#include <frc2/command/InstantCommand.h>
 #include <frc2/command/button/Button.h>
 
 #include "Constants.h"
 #include "commands/AutonomousDistance.h"
 #include "commands/AutonomousTime.h"
+#include "commands/DriveDistance.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/OnBoardIO.h"
+#include <units/length.h>
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -39,14 +42,16 @@ class RobotContainer {
  public:
   RobotContainer();
   frc2::Command* GetAutonomousCommand();
-
+  frc2::Command* GetDriveDistance(bool moving);
  private:
   // Assumes a gamepad plugged into channnel 0
-  frc::Joystick m_controller{0};
+  frc::GenericHID m_controller{0};
   frc::SendableChooser<frc2::Command*> m_chooser;
 
+  frc2::JoystickButton m_button1{&m_controller,1};
   // The robot's subsystems
   Drivetrain m_drive;
+
   OnBoardIO m_onboardIO{OnBoardIO::ChannelMode::INPUT,
                         OnBoardIO::ChannelMode::INPUT};
 
@@ -58,8 +63,8 @@ class RobotContainer {
   AutonomousDistance m_autoDistance{&m_drive};
   AutonomousTime m_autoTime{&m_drive};
 
-  
-  DriveDistance driveDistance;
+  DriveDistance m_driveForward, m_driveStop;
+
   frc2::JoystickButton button;
 
   void ConfigureButtonBindings();
