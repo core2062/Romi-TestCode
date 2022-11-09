@@ -8,11 +8,9 @@
 #include <frc2/command/PrintCommand.h>
 #include <frc2/command/button/Button.h>
 
-#include "commands/DriveDistance.h"
-#include "commands/TeleopArcadeDrive.h"
-#include "subsystems/Drivetrain.h"
 
 RobotContainer::RobotContainer() : m_driveForward(2,1_m,&m_drive), m_driveStop(2,1_m,&m_drive) {
+  
   // Configure the button bindings
   ConfigureButtonBindings();
   
@@ -28,11 +26,11 @@ void RobotContainer::ConfigureButtonBindings() {
   m_onboardButtonA.WhenPressed(frc2::PrintCommand("Button A Pressed"))
                   .WhenReleased(frc2::PrintCommand("Button A Released"));
 
-  m_button1.WhenPressed(frc2::PrintCommand("Button Pressed"))
-                                        .WhenReleased(frc2::PrintCommand("Button Released"));
+  frc2::JoystickButton(&m_controller, 1).WhenPressed(frc2::PrintCommand("Button Pressed"))
+           .WhenReleased(frc2::PrintCommand("Button Released"));
   
-  m_button1.WhenPressed(GetDriveDistance(true))
-                                        .WhenReleased(GetDriveDistance(false));
+  frc2::JoystickButton(&m_controller, 1).WhenPressed(GetDriveDistance(true))
+           .WhenReleased(GetDriveDistance(false));
 
 
   // Setup SmartDashboard options.

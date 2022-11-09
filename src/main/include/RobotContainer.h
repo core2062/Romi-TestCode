@@ -10,6 +10,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/button/Button.h>
+#include <units/length.h>
 
 #include "Constants.h"
 #include "commands/AutonomousDistance.h"
@@ -17,7 +18,7 @@
 #include "commands/DriveDistance.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/OnBoardIO.h"
-#include <units/length.h>
+#include "commands/TeleopArcadeDrive.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -45,10 +46,9 @@ class RobotContainer {
   frc2::Command* GetDriveDistance(bool moving);
  private:
   // Assumes a gamepad plugged into channnel 0
-  frc::GenericHID m_controller{0};
+  frc::Joystick m_controller{0};
   frc::SendableChooser<frc2::Command*> m_chooser;
 
-  frc2::JoystickButton m_button1{&m_controller,1};
   // The robot's subsystems
   Drivetrain m_drive;
 
@@ -64,8 +64,6 @@ class RobotContainer {
   AutonomousTime m_autoTime{&m_drive};
 
   DriveDistance m_driveForward, m_driveStop;
-
-  frc2::JoystickButton button;
 
   void ConfigureButtonBindings();
 };
