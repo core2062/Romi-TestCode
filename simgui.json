@@ -30,6 +30,13 @@
       "/LiveWindow/Ungrouped/Spark[1]": "Motor Controller",
       "/LiveWindow/Ungrouped/class frc2::SubsystemBase": "Subsystem",
       "/SmartDashboard/Auto Selector": "String Chooser"
+    },
+    "windows": {
+      "/SmartDashboard/Auto Selector": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   }
 }

@@ -15,7 +15,9 @@
 #include "Constants.h"
 #include "commands/AutonomousDistance.h"
 #include "commands/AutonomousTime.h"
+#include "commands/AutoTest.h"
 #include "commands/DriveDistance.h"
+#include "commands/Drive.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/OnBoardIO.h"
 #include "commands/TeleopArcadeDrive.h"
@@ -43,7 +45,7 @@ class RobotContainer {
  public:
   RobotContainer();
   frc2::Command* GetAutonomousCommand();
-  frc2::Command* GetDriveDistance(bool moving);
+  frc2::Command* GetDrive(bool moving);
  private:
   // Assumes a gamepad plugged into channnel 0
   frc::Joystick m_controller{0};
@@ -62,8 +64,9 @@ class RobotContainer {
   // Autonomous commands.
   AutonomousDistance m_autoDistance{&m_drive};
   AutonomousTime m_autoTime{&m_drive};
+  AutoTest m_autoTest{&m_drive};
 
-  DriveDistance m_driveForward, m_driveStop;
-
+  Drive m_move;
+  DriveDistance m_stop;
   void ConfigureButtonBindings();
 };
